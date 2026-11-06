@@ -77,7 +77,7 @@ python Decrypt.py
 
 ---
 
-## 🚨 Сейчас в open-source версия V1. Проект V2 находится в разработке.
+## 🚨 Open-source V1
 
 ## 📝 Лицензия
 
