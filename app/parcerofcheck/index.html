@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Электронный чек № 0045 — Евроопт</title>
+    <style>
+        :root {
+            --bg-color: #f2f4f7;
+            --receipt-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --accent-green: #009944;
+            --border-dashed: #d1d5db;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            padding: 20px 12px;
+            line-height: 1.4;
+        }
+
+        .receipt-wrapper {
+            width: 100%;
+            max-width: 400px;
+            background: var(--receipt-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 24px 20px;
+            position: relative;
+        }
+
+        /* Статус проверки СККО */
+        .status-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background-color: #ecfdf5;
+            color: var(--accent-green);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin-bottom: 18px;
+        }
+
+        /* Шапка чека */
+        .header {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .brand-logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent-green);
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .company-info {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px dashed var(--border-dashed);
+            margin: 14px 0;
+        }
+
+        /* Метаданные чека */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .meta-grid span:nth-child(even) {
+            text-align: right;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        /* Список товаров */
+        .items-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .item {
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .item-name {
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .item-details {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        .item-total {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .item-discount {
+            display: flex;
+            justify-content: space-between;
+            color: var(--accent-green);
+            font-size: 12px;
+        }
+
+        /* Итоги */
+        .totals-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .totals-row.grand-total {
+            font-size: 18px;
+            font-weight: 800;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Блок Еплюс */
+        .loyalty-box {
+            background-color: #f9fafb;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 12px;
+        }
+
+        .loyalty-title {
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        /* Фискальный блок и QR */
+        .fiscal-block {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .qr-container {
+            margin: 14px auto;
+            width: 140px;
+            height: 140px;
+            padding: 8px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        .qr-container img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .ui-code {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 11px;
+            word-break: break-all;
+            color: var(--text-main);
+            margin-top: 4px;
+        }
+
+        .footer-thanks {
+            text-align: center;
+            font-weight: 700;
+            font-size: 13px;
+            margin-top: 16px;
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+
+<div class="receipt-wrapper">
+    <!-- Статус валидации -->
+    <div class="status-badge">
+        <span>✔ Чек проверен в СККО РБ</span>
+    </div>
+
+    <!-- Шапка организации -->
+    <div class="header">
+        <div class="brand-logo">ЕВРООПТ</div>
+        <div class="company-info">
+            <strong>ООО «ЕВРОТОРГ»</strong><br>
+            Магазин № 123 «Евроопт»<br>
+            220092, г. Минск, ул. Притыцкого, 29<br>
+            УНП: 101168731
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Реквизиты кассы -->
+    <div class="meta-grid">
+        <span>Платежный документ:</span>
+        <span>КАССОВЫЙ ЧЕК № 0045</span>
+        <span>РН КСА / СКО:</span>
+        <span>123456789 / 987654</span>
+        <span>Дата и время:</span>
+        <span>12.11.2026 18:45:12</span>
+        <span>Кассир:</span>
+        <span>Иванова А.А. (КСО №4)</span>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Позиции чека -->
+    <div class="items-title">Товарные позиции</div>
+
+    <div class="item">
+        <div class="item-name">1. Молоко Савушкин 3.2% ПЭТ 1л</div>
+        <div class="item-details">
+            <span>1.000 шт × 2.35 BYN (НДС 10%)</span>
+            <span class="item-total">2.35</span>
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="item-name">2. Батон нарезной 400г в/с</div>
+        <div class="item-details">
+            <span>1.000 шт × 1.49 BYN (НДС 10%)</span>
+            <span class="item-total">1.49</span>
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="item-name">3. Бананы свежие весовые 1 кг</div>
+        <div class="item-details">
+            <span>0.850 кг × 4.99 BYN (НДС 10%)</span>
+            <span class="item-total">4.24</span>
+        </div>
+        <div class="item-discount">
+            <span>Скидка по карте «Еплюс»</span>
+            <span>-0.21</span>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Итоговый расчет -->
+    <div class="totals-row">
+        <span>Сумма без скидки:</span>
+        <span>8.08 BYN</span>
+    </div>
+    <div class="totals-row" style="color: var(--accent-green);">
+        <span>Скидка по дисконтной карте:</span>
+        <span>-0.21 BYN</span>
+    </div>
+    <div class="totals-row grand-total">
+        <span>ИТОГО К ОПЛАТЕ:</span>
+        <span>7.87 BYN</span>
+    </div>
+    <div class="totals-row" style="color: var(--text-muted); font-size: 12px;">
+        <span>В т.ч. НДС 10%:</span>
+        <span>0.72 BYN</span>
+    </div>
+    <div class="totals-row" style="font-size: 12px;">
+        <span>Оплата (Банковская карта):</span>
+        <span>7.87 BYN</span>
+    </div>
+    <div class="totals-row" style="color: var(--text-muted); font-size: 12px;">
+        <span>Сдача:</span>
+        <span>0.00 BYN</span>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Программа лояльности -->
+    <div class="loyalty-box">
+        <div class="loyalty-title">Программа лояльности «Еплюс»</div>
+        <div class="totals-row" style="font-size: 12px;">
+            <span>Номер карты:</span>
+            <span>**** **** **** 5678</span>
+        </div>
+        <div class="totals-row" style="font-size: 12px;">
+            <span>Начислено бонусов:</span>
+            <span>+0.08</span>
+        </div>
+        <div class="totals-row" style="font-size: 12px;">
+            <span>Доступный баланс:</span>
+            <span>12.45</span>
+        </div>
+        <div class="totals-row" style="font-size: 12px; margin-bottom: 0;">
+            <span>Игровой код «Удача в придачу!»:</span>
+            <strong>1234567</strong>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Фискальный блок и QR -->
+    <div class="fiscal-block">
+        <div>Уникальный идентификатор (УИ) документа:</div>
+        <div class="ui-code">987654321098765432101234</div>
+        
+        <div class="qr-container">
+            <!-- Генерация тестового QR-кода со ссылкой на проверку СККО -->
+            <img src="https://qrserver.com" alt="QR-код чека СККО">
+        </div>
+        
+        <div>Проверить подлинность чека можно на портале<br><strong>ch.info-center.by</strong></div>
+    </div>
+
+    <div class="footer-thanks">
+        СПАСИБО ЗА ПОКУПКУ!
+    </div>
+</div>
+
+</body>
+</html>

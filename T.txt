@@ -1,0 +1,5 @@
+python -m venv venv
+venv\Scripts\activate
+pip install "fastapi[standard]"
+
+fastapi dev app/main.py
